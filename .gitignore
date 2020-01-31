@@ -11,3 +11,8 @@ static
 models/__pycache__/
 __pycache__/
 resources/__pycache__/
+recipes_db/
+logfile
+.empty/
+migrations/__pycache__/
+migrations/versions/__pycache__/
