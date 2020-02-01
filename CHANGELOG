@@ -4,8 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.2] - 2020-01-31
+
+### Added
+
+- Add models/user.py file that include the User model to mapped to the user table in the database and defined fields and methods
+- Add migrations folder with first migration from Flask-Migrate.
+- Add config.py file to define path database, debug & track modifications and add a variables.
+- Add extension.py file to import SQLAlchemy and create an instance of SQLAlchemy object.
+
+### Changed
+
+- Update gitignore file.
+- Rewrite models/recipe.py that include the Recipe model to mapped to the recipe table in the database and define the field.
+- Rewrite app.py file. Now this file include function to create the Flask app, initialize SQLAlchemy and set up Flask-Migrate
+
+
 ## [0.0.1] - 2020-01-07
 
 ### Added
 
-- Initial folders and files to begin to build a RESTful Web APIs with Flask Framework..
+- Initial folders and files to begin to build a RESTful Web APIs with Flask Framework.
