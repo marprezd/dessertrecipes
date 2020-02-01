@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.3] - 2020-02-01
+
+### Added
+
+- Add resources/user.py file to implement the Post method.
+- Add resources/__init__.py file.
+- Add utils.py file to  to hash the password.
+
+### Changed
+
+- Update app.py file. Replace 'from models.user import User' by 'from resources.user import
+UserListResource' and uncomment api.add_resource(UserListResource, '/users').
+
+
 ## [0.0.2] - 2020-01-31
 
 ### Added
