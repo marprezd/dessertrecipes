@@ -1,21 +1,42 @@
+# app.py file
 from flask import Flask
+from flask_migrate import Migrate
 from flask_restful import Api
+from config import Config
+from extensions import db
+from models.user import User
 from resources.recipe import RecipeListResource, RecipeResource, RecipePublishResource
 
-# initialize Flask & API Flask Restful
-app = Flask(__name__)
-api = Api(app)
-
-# Add resource routing
-api.add_resource(RecipeListResource, '/recipes')
-api.add_resource(RecipeResource, '/recipes/<int:recipe_id>')
-api.add_resource(RecipePublishResource, '/recipes/<int:recipe_id>/publish')
+migrate = Migrate()
 
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
+def create_app():
+    """function to create the Flask app, also invoke the register_extensions and register_resources functions"""
+    app = Flask(__name__)
+    app.config.from_object(Config)
+
+    register_extensions(app)
+    register_resources(app)
+
+    return app
+
+
+def register_extensions(app):
+    """function to initialize SQLAlchemy and set up Flask-Migrate"""
+    db.init_app(app)
+    migrate.init_app(app, db)
+
+
+def register_resources(app):
+    """function to set up resource routing"""
+    api = Api(app)
+
+    # api.add_resource(UserListResource, '/users')
+    api.add_resource(RecipeListResource, '/recipes')
+    api.add_resource(RecipeResource, '/recipes/<int:recipe_id>')
+    api.add_resource(RecipePublishResource, '/recipes/<int:recipe_id>/publish')
 
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app = create_app()
+    app.run()  # start the application
