@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Add resources/user.py file to implement the Post method.
 - Add resources/__init__.py file.
-- Add utils.py file to  to hash the password.
+- Add utils.py file to hash the password.
 
 ### Changed
 
