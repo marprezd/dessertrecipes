@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.4] - 2020-02-02
+
+### Added
+
+- Add resources/token.py file to create the resource for the user login.
+- Add.
+
+### Changed
+
+- Update app.py file: Import and initialize jwt (Flask-JWT-Extended), import resource for getting user details.
+- Update config.py file: Configure Flask-JWT-Extended.
+- Update extension.py file: Create an instance of Flask-JWT-Extended.
+- Update resources/user.py file: Create a new resource, which is for getting user details.
+- Update models/user.py: Add the get_by_id method to get the user object by ID.
+
+
 ## [0.0.3] - 2020-02-01
 
 ### Added
