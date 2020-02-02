@@ -30,3 +30,8 @@ class User(db.Model):
         """persist the data to the database"""
         db.session.add(self)
         db.session.commit()
+
+    @classmethod
+    def get_by_id(cls, id):
+        """get the user object by ID"""
+        return cls.query.filter_by(id=id).first()
