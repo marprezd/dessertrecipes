@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.5] - 2020-02-03
+
+### Changed
+
+- Update app.py file: Set resources to implement logout function and refresh token.
+- Update config.py file: Configure Flask-JWT-Extended (logout functionality).
+- Update resources/token.py: Add a function to refresh tokens, it without users putting in their credentials again.
+- Update resources/recipe.py: Import JWT libraries, modify method 'RecipesListResource', 'RecipeResource' and 'RecipePublishResource'. Now, only authorized users are allowed to manage their
+recipes.
+- Update models/recipe.py: Recipe management features of our application, delete the get_last_id() method and recipe_list variable.
+
+
 ## [0.0.4] - 2020-02-02
 
 ### Added
