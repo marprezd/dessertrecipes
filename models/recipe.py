@@ -1,17 +1,6 @@
 # models/recipe.py file
 from extensions import db
 
-recipe_list = []  # store recipes within a list
-
-
-def get_last_id():
-    """get the ID of our last recipe"""
-    if recipe_list:
-        last_recipe = recipe_list[-1]
-    else:
-        return 1
-    return last_recipe.id + 1
-
 
 class Recipe(db.Model):
     """class Recipe: mapped to the recipe table in the database and define the field"""
@@ -28,3 +17,34 @@ class Recipe(db.Model):
     updated_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now(), onupdate=db.func.now())
 
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
+
+    def data(self):
+        """This method return the data in a dictionary format"""
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'num_of_servings': self.num_of_servings,
+            'directions': self.directions,
+            'user_id': self.user_id
+        }
+
+    @classmethod
+    def get_all_published(cls):
+        """This method gets all the published recipes"""
+        return cls.query.filter_by(is_publish=True).all()
+
+    @classmethod
+    def get_by_id(cls, recipe_id):
+        """This method gets the recipes by ID"""
+        return cls.query.filter_by(id=recipe_id).first()
+
+    def save(self):
+        """This method persists data to the database"""
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        """This method deletes data from the database"""
+        db.session.delete(self)
+        db.session.commit()
