@@ -9,3 +9,7 @@ class Config:
     # Configure Flask-JWT-Extend
     SECRET_KEY = 'super-secret-key'
     JWT_ERROR_MESSAGE_KEY = 'message'
+
+    # Configure logout functionality
+    JWT_BLACKLIST_ENABLED = True
+    JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
