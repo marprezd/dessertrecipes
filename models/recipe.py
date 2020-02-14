@@ -3,7 +3,6 @@ from extensions import db
 
 
 class Recipe(db.Model):
-    """class Recipe: mapped to the recipe table in the database and define the field"""
     __tablename__ = 'recipe'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -17,17 +16,6 @@ class Recipe(db.Model):
     updated_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now(), onupdate=db.func.now())
 
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
-
-    def data(self):
-        """This method return the data in a dictionary format"""
-        return {
-            'id': self.id,
-            'name': self.name,
-            'description': self.description,
-            'num_of_servings': self.num_of_servings,
-            'directions': self.directions,
-            'user_id': self.user_id
-        }
 
     @classmethod
     def get_all_published(cls):
