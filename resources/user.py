@@ -9,8 +9,6 @@ from models.user import User
 
 
 class UserListResource(Resource):
-    """implement the Post method"""
-
     def post(self):
         """function to get the JSON formatted data in the request"""
         json_data = request.get_json()
@@ -49,8 +47,6 @@ class UserListResource(Resource):
 
 
 class UserResource(Resource):
-    """Define a get method and wrap it with a jwt_optional decorator."""
-
     @jwt_optional
     def get(self, username):
         """check whether the username can be found in the database."""
