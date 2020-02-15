@@ -36,3 +36,13 @@ class Recipe(db.Model):
         """This method deletes data from the database"""
         db.session.delete(self)
         db.session.commit()
+
+    @classmethod
+    def get_all_by_user(cls, user_id, visibility='public'):
+        """only authenticated users will be able to see all of their own recipes"""
+        if visibility == 'public':
+            return cls.query.filter_by(user_id=user_id, is_publish=True).all()
+        elif visibility == 'private':
+            return cls.query.filter_by(user_id=user_id, is_publish=False).all()
+        else:
+            return cls.query.filter_by(user_id=user_id).all()
