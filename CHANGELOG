@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.7] - 2020-02-15
+
+### Added
+
+- Add schemas/user.py and schemas/recipe.py files to support the serialization/deserialization for the User and Recipe object respectively, also add data validation functions provided by marshmallow to make our API endpoints even more secure.
+
+### Changed
+
+- Add schemas/recipe.py: Modify the recipe schema, to include all attributes except for email
+- Update app.py file: Add endpoint to the Restful APIs to access the list of recipes published by a user.
+- Update resources/user.py file: Import webargs libraries, recipe data and create class to implement access control.
+- Update models/recipe.py: Implement access control on recipes, only only authenticated users will be able to see all of their own recipes.
+- Update resources/recipe.py file: Change the recipe update method from PUT to PATCH within the RecipeResource class and
+Modify the get method in RecipeResource to serialize the recipe object into JSON format.
+
+
 ## [0.0.6] - 2020-02-14
 
 ### Added
