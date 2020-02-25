@@ -4,19 +4,65 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.8] - 2020-02-25
+
+### Added
+
+- Add mailgun.py file to use the Mailgun API to send out emails within our app.
+- Add Procfile file. Required for deploy our RESTful API on Heroku.
+- Add main.py file. Required for Gunicorn.
+- Add new migration files.
+- Add schemas/pagination.py file. Required to Serialize the pagination object from Flask-SQLAlchemy
+
+### Changed
+
+- Update config.py file: optimize code to run the application on the Heroku server and locally on the development
+machine.
+
+- Update extension.py file: added a few lines of code to instantiate Cache, Flask Upload and Limiter objects
+
+- Update models/recipe.py file: a new field was added to our User model to support the user avatar.
+
+- Update schemas/user.py file: functionality to serialize and verify the user's avatar
+
+- Update resource/token.py file: functionality for that the user cannot log in to the application before their
+account is activated.
+
+- Update app.py file: functionality to get configurations dynamically. Update the register_extensions(app)
+and register_resources(app) functions..
+
+- Update resources/user.py file: imported the Mailgun API libraries, and added a few lines of code to configure
+the activation of the user account using Mailgun for sending messages and activation token..
+
+- Update utils.py file: functionality to generate and verify the token to activate the user account, clear the
+cache, load and update the user's avatar and the cover image of the recipe, compress images..
+
+- Update schemas/recipe.py file: functionality to modify the recipe scheme to include all attributes except email, validate
+new model fields, serialize the recipe cover image, and support for recipe list pagination.
+
+- Update models/recipe.py file: implement access control in recipes, only authenticated users can see their own recipes.
+Two new fields were added to our Recipe model to support the cover image and ingredient input for each recipe.
+Finally, the code was optimized to allow paging, ordering and searching for all recipes that match the search
+criteria.
+
+- Update resources/recipe.py file: imported some necessary libraries, added functionalities to update a recipe
+using the PATCH method within the RecipeResource class, also modify the get method in RecipeResource to serialize
+the object of the recipe in JSON format. Some features were added to manage cover images, paging, sorting and
+searching for recipes, cleaning cache and finally limiting the number of requests to our RESTful API.
+
 ## [0.0.7] - 2020-02-15
 
 ### Added
 
 - Add schemas/user.py and schemas/recipe.py files to support the serialization/deserialization for the User and Recipe object respectively, also add data validation functions provided by marshmallow to make our API endpoints even more secure.
+- Add schemas/recipe.py: modify the recipe schema, to include all attributes except for email
 
 ### Changed
 
-- Add schemas/recipe.py: Modify the recipe schema, to include all attributes except for email
-- Update app.py file: Add endpoint to the Restful APIs to access the list of recipes published by a user.
-- Update resources/user.py file: Import webargs libraries, recipe data and create class to implement access control.
-- Update models/recipe.py: Implement access control on recipes, only only authenticated users will be able to see all of their own recipes.
-- Update resources/recipe.py file: Change the recipe update method from PUT to PATCH within the RecipeResource class and
+- Update app.py file: add endpoint to the Restful APIs to access the list of recipes published by a user.
+- Update resources/user.py file: import webargs libraries, recipe data and create class to implement access control.
+- Update models/recipe.py: implement access control on recipes, only only authenticated users will be able to see all of their own recipes.
+- Update resources/recipe.py file: change the recipe update method from PUT to PATCH within the RecipeResource class and
 Modify the get method in RecipeResource to serialize the recipe object into JSON format.
 
 
@@ -28,9 +74,9 @@ Modify the get method in RecipeResource to serialize the recipe object into JSON
 
 ### Changed
 
-- Update app.py file: Import and initialize jwt (Flask-JWT-Extended), import resource for getting user details.
-- Update config.py file: Configure Flask-JWT-Extended.
-- Update resources/recipe.py file: Import RecipeSchema and modify the RecipeListResource post and get method to use the recipe schema.
+- Update app.py file: import and initialize jwt (Flask-JWT-Extended), import resource for getting user details.
+- Update config.py file: configure Flask-JWT-Extended.
+- Update resources/recipe.py file: import RecipeSchema and modify the RecipeListResource post and get method to use the recipe schema.
 - Update resources/user.py file: added functionality to serialization/deserialization User object.
 - Update models/recipe.py: delete the data method.
 
@@ -39,12 +85,12 @@ Modify the get method in RecipeResource to serialize the recipe object into JSON
 
 ### Changed
 
-- Update app.py file: Set resources to implement logout function and refresh token.
-- Update config.py file: Configure Flask-JWT-Extended (logout functionality).
-- Update resources/token.py: Add a function to refresh tokens, it without users putting in their credentials again.
-- Update resources/recipe.py: Import JWT libraries, modify method 'RecipesListResource', 'RecipeResource' and 'RecipePublishResource'. Now, only authorized users are allowed to manage their
+- Update app.py file: set resources to implement logout function and refresh token.
+- Update config.py file: configure Flask-JWT-Extended (logout functionality).
+- Update resources/token.py: add a function to refresh tokens, it without users putting in their credentials again.
+- Update resources/recipe.py: import JWT libraries, modify method 'RecipesListResource', 'RecipeResource' and 'RecipePublishResource'. Now, only authorized users are allowed to manage their
 recipes.
-- Update models/recipe.py: Recipe management features of our application, delete the get_last_id() method and recipe_list variable.
+- Update models/recipe.py: recipe management features of our application, delete the get_last_id() method and recipe_list variable.
 
 
 ## [0.0.4] - 2020-02-02
@@ -52,15 +98,14 @@ recipes.
 ### Added
 
 - Add resources/token.py file to create the resource for the user login.
-- Add.
 
 ### Changed
 
-- Update app.py file: Import and initialize jwt (Flask-JWT-Extended), import resource for getting user details.
-- Update config.py file: Configure Flask-JWT-Extended.
-- Update extension.py file: Create an instance of Flask-JWT-Extended.
-- Update resources/user.py file: Create a new resource, which is for getting user details.
-- Update models/user.py: Add the get_by_id method to get the user object by ID.
+- Update app.py file: import and initialize jwt (Flask-JWT-Extended), import resource for getting user details.
+- Update config.py file: configure Flask-JWT-Extended.
+- Update extension.py file: create an instance of Flask-JWT-Extended.
+- Update resources/user.py file: create a new resource, which is for getting user details.
+- Update models/user.py: add the get_by_id method to get the user object by ID.
 
 
 ## [0.0.3] - 2020-02-01
@@ -73,7 +118,7 @@ recipes.
 
 ### Changed
 
-- Update app.py file. Replace 'from models.user import User' by 'from resources.user import
+- Update app.py file: replace 'from models.user import User' by 'from resources.user import
 UserListResource' and uncomment api.add_resource(UserListResource, '/users').
 
 
