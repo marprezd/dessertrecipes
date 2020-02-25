@@ -1,4 +1,6 @@
 # resources/token.py file
+
+# Import the necessary package and module
 from http import HTTPStatus
 from flask import request
 from flask_restful import Resource
@@ -17,22 +19,25 @@ black_list = set()
 
 
 class TokenResource(Resource):
-    """This class inherits from flask_restful.Resource"""
 
     def post(self):
-        """
-        When a user logs in, this method will be invoked and it will take the email and password from the client
-        JSON request.
+        """This method has the logic to receive the email together password of the client and
+        generate an authentication token
         """
         json_data = request.get_json()
         email = json_data.get('email')
         password = json_data.get('password')
 
-        user = User.get_by_email(email=email)  # Verify the correctness of the user's credentials
+        # Verify the correctness of the user's credentials
+        user = User.get_by_email(email=email)
 
         if not user or not check_password(password, user.password):
             # Return 401 UNAUTHORIZED, with an email message.
             return {'message': 'email or password is incorrect'}, HTTPStatus.UNAUTHORIZED
+
+        # User cannot log in to the application before their account is activated
+        if user.is_active is False:
+            return {'message': 'The user account is not activated yet'}, HTTPStatus.FORBIDDEN
 
         # Create an access token with the user id as the identity to the user and pass
         # in the fresh=True parameter to the create_access_token function. We
@@ -46,7 +51,8 @@ class TokenResource(Resource):
 class RefreshResource(Resource):
     @jwt_refresh_token_required
     def post(self):
-        """We are generating a token for the user with fresh=False"""
+        """This method has the logic to refresh a token for a previously
+        authenticated user"""
         current_user = get_jwt_identity()
         token = create_access_token(identity=current_user, fresh=False)
 
@@ -57,9 +63,10 @@ class RevokeResource(Resource):
 
     @jwt_required
     def post(self):
-        """get the token using get_raw_jwt()['jti'] and put it in the blacklist"""
+        """This method has the logic to implementing the logout function"""
         jti = get_raw_jwt()['jti']
 
+        # After getting the token we put it in the blacklist
         black_list.add(jti)
 
         return {'message': 'Successfully logged out'}, HTTPStatus.OK
