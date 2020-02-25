@@ -3,12 +3,13 @@ from extensions import db
 
 
 class User(db.Model):
-    """class User: mapped to the user table in the database and defined fields and methods"""
     __tablename__ = 'user'
 
+    # Define our User model
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
     email = db.Column(db.String(200), nullable=False, unique=True)
+    avatar_image = db.Column(db.String(100), default=None)
     password = db.Column(db.String(200))
     is_active = db.Column(db.Boolean(), default=False)
     created_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now())
@@ -18,20 +19,20 @@ class User(db.Model):
 
     @classmethod
     def get_by_username(cls, username):
-        """searching the user by username"""
+        """This method searching the user by username"""
         return cls.query.filter_by(username=username).first()
 
     @classmethod
     def get_by_email(cls, email):
-        """searching the user by email"""
+        """This method searching the user by email"""
         return cls.query.filter_by(email=email).first()
-
-    def save(self):
-        """persist the data to the database"""
-        db.session.add(self)
-        db.session.commit()
 
     @classmethod
     def get_by_id(cls, id):
-        """get the user object by ID"""
+        """This method get the user object by ID"""
         return cls.query.filter_by(id=id).first()
+
+    def save(self):
+        """This method persist the data to the database"""
+        db.session.add(self)
+        db.session.commit()
