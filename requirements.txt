@@ -31,6 +31,7 @@ Flask-Security==3.0.0
 Flask-SQLAlchemy==2.4.1
 Flask-Uploads==0.2.1
 Flask-WTF==0.14.2
+gunicorn==19.9.0
 httpie==1.0.3
 humanize==0.5.1
 idna==2.8
