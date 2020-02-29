@@ -28,7 +28,7 @@ migrate = Migrate()
 def create_app():
     """function to get the configurations dynamically,
     also invoke the register_extensions and register_resources functions"""
-    env = os.environ.get('ENV', 'Production')
+    env = os.environ.get('ENV', 'Development')
 
     if env == 'Production':
         config_str = 'config.ProductionConfig'
